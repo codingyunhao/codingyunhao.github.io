@@ -1,148 +1,156 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Node.js-Notes | Jason.yunhao</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>var _hmt = _hmt || [];
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title> | Jason.yunhao</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = 'https://hm.baidu.com/hm.js?' + '8006843039519956000';
   var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
   })();
-  </script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Node.js-Notes</h1><a id="logo" href="/.">Jason.yunhao</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 主页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/leaveMsg"><i class="fa fa-comments"> 留言板</i></a><a href="/about/"><i class="fa fa-user"> 关于我</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Node.js-Notes</h1><div class="post-meta">Apr 28, 2018<span> | </span><span class="category"><a href="/categories/后端/">后端</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a class="disqus-comment-count" href="/2018/04/28/node/#vcomment"><span class="valine-comment-count" data-xid="/2018/04/28/node/"></span><span> 条评论</span></a><div class="post-content"><p>node简介</p>
-<!--more->
-
-
-
-# Node.js-Notes
-个人的 Node.js 学习笔记，有兴趣的小伙伴可以了解下，希望能帮到你们。
-### 目录
-1. [Introduction](#introduction)
-    - [简介](#简介)
-    - [特点](#特点)
-    - [适合开发领域](#适合开发领域)
-    - [总结](#总结)
-2. [安装Node.js](#install-nodejs)
-3. [NPM node.js 模块管理](#npm-nodejs-模块管理)    
-    - [NPM简介](#npm简介)
-    - [NPM常用命令](#npm常用命令)
-4. [开始第一个 node.js web 实例](#开始第一个-nodejs-web-实例)
-5. [node.js 回调函数](#nodejs-回调函数)
-    - [1. 同步操作文件(阻塞I/O)](#1-同步操作文件阻塞io)     
-    - [2. 异步操作文件(非阻塞I/O)](#2-异步操作文件非阻塞io)
-6. [Node.js 事件循环](#nodejs-事件循环)
-    - [自定义模块](#自定义模块)
-7. [Node.js 函数](#nodejs-函数)
-    - [常用函数](#常用函数)
-    - [匿名函数](#匿名函数)
-8. [Node.js 路由](#nodejs-路由)
-9. [Node.js 全局对象](#nodejs-全局对象)
-    - [__filename](#__filename)
-    - [__dirname](#__dirname)
-    - [console](#console)
-    - [process](#process)
-10. [Node.js 常用工具](#nodejs-常用工具)
-    - [util.inspect 将任意对象转换 为字符串](#utilinspect-将任意对象转换-为字符串)
-    - [util.isArray() 判断是否是数组](#utilisarray-判断是否是数组)
-    - [util.isBoolean() 判断是否是boolean类型的](#utilisboolean-判断是否是boolean类型的)
-    - [util.isDate() 判断是否是日期](#utilisdate-判断是否是日期)
-    - [util.isFunction() 判断是否是函数](#utilisfunction-判断是否是函数)
-    - [util.isObject() 判断是否是对象](#utilisobject-判断是否是对象)
-    - [util.isRegExp() 是否是正则对象](#utilisregexp-是否是正则对象)
-11. [文件系统](#文件系统)
-    - [读文件内容](#读文件内容)
-        - [1. 异步非堵塞读取](#1-异步非堵塞读取)
-        - [2. 同步堵塞读取](#2-同步堵塞读取)
-    - [写文件内容](#写文件内容)
-    - [删除文件](#删除文件)
-    - [创建目录](#创建目录)
-    - [删除目录](#删除目录)
-12. [GET和POST请求](#get和post请求)
-    - [GET请求](#get请求)
-    - [POST请求](#post请求)
-13. [工具模块](#工具模块)
-    - [OS模块](#os模块)
-    - [Path模块](#path模块)
-    - [Net模块](#net模块)
-    - [DNS模块](#dns模块)
-    - [Domain模块](#domain模块)
-14. [MySql](#mysql)
-    - [查询数据](#查询数据)
-    - [插入数据](#插入数据)
-    - [更新数据](#更新数据)
-    - [删除数据](#删除数据)
-15. [HTTP模块](#http模块)
-16. [静态文件夹](#静态文件夹)
-
-# Introduction
-## 简介 
-> Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。<br> 
-Node.js 使用了一个事件驱动、非阻塞式 I/O 的模型，使其轻量又高效。<br> 
-Node.js 的包管理器 npm，是全球最大的开源库生态系统。
-
-## 特点
-### 单线程
-![单线程](http://i.imgur.com/aX2lBae.png)
-> 在Java、PHP或者.net等服务器端语言中，会为每一个客户端连接创建一个新的线程。而每个线程需要耗费大约2MB内存。也就是说，理论上，一个8GB内存的服务器可以同时连接的最大用户数为4000个左右。要让Web应用程序支持更多的用户，就需要增加服务器的数量，而Web应用程序的硬件成本当然就上升了。<br>
-Node.js不为每个客户连接创建一个新的线程，而仅仅使用一个线程。当有用户连接了，就触发一个内部事件，通过非阻塞I/O、事件驱动机制，让Node.js程序宏观上也是并行的。使用Node.js，一个8GB内存的服务器，可以同时处理超过4万用户的连接。<br>
-另外，带线程的带来的好处，还有操作系统完全不再有线程创建、销毁的时间开销。
-坏处，就是一个用户造成了线程的崩溃，整个服务都崩溃了，其他人也崩溃了。
-
-### 非阻塞I/O non-blocking I/O 
-> 例如，当在访问数据库取得数据的时候，需要一段时间。在传统的单线程处理机制中，在执行了访问数据库代码之后，整个线程都将暂停下来，等待数据库返回结果，才能执行后面的代码。也就是说，I/O阻塞了代码的执行，极大地降低了程序的执行效率。<br>
-由于Node.js中采用了非阻塞型I/O机制，因此在执行了访问数据库的代码之后，将立即转而执行其后面的代码，把数据库返回结果的处理代码放在回调函数中，从而提高了程序的执行效率。<br>
-当某个I/O执行完毕时，将以事件的形式通知执行I/O操作的线程，线程执行这个事件的回调函数。为了处理异步I/O，线程必须有事件循环，不断的检查有没有未处理的事件，依次予以处理。<br>
-阻塞模式下，一个线程只能处理一项任务，要想提高吞吐量必须通过多线程。而非阻塞模式下，一个线程永远在执行计算操作，这个线程的CPU核心利用率永远是100%。所以，这是一种特别有哲理的解决方案：与其人多，但是好多人闲着；还不如一个人玩命，往死里干活儿。
-
-### 事件驱动 event-driven
-> 在Node中，客户端请求建立连接，提交数据等行为，会触发相应的事件。在Node中，在一个时刻，只能执行一个事件回调函数，但是在执行一个事件回调函数的中途，可以转而处理其他事件（比如，又有新用户连接了），然后返回继续执行原事件的回调函数，这种处理机制，称为“事件环”机制。<br>
-Node.js底层是C++（V8也是C++写的）。底层代码中，近半数都用于事件队列、回调函数队列的构建。用事件驱动来完成服务器的任务调度，这是鬼才才能想到的。针尖上的舞蹈，用一个线程，担负起了处理非常多的任务的使命。
-
-## 适合开发领域
-> Node.js 善于I/O，不善于计算。因为Node.js最擅长的就是任务调度，如果你的业务有很多的CPU计算，实际上也相当于这个计算阻塞了这个单线程，就不适合Node开发。<br>
-> 当应用程序需要处理大量并发的I/O，而在向客户端发出响应之前，应用程序内部并不需要进行非常复杂的处理的时候，Node.js非常适合。Node.js也非常适合与web socket配合，开发长连接的实时交互应用程序。<br>
-> 比如:<br>
-> - 用户表单收集
-> - 考试系统
-> - 聊天室
-> - 图文直播
-> - 提供JSON的API（为前台Angular使用）
-
-## 总结
-![原理图](http://i.imgur.com/DPHgbYn.png)
-> 单线程，单线程的好处，减少了内存开销，操作系统的内存换页。如果某一个事情，进入了，但是被I/O阻塞了，所以这个线程就阻塞了。<br>
-> 非阻塞I/O， 不会傻等I/O语句结束，而会执行后面的语句。<br>
-> 事件机制，事件环，不管是新用户的请求，还是老用户的I/O完成，都将以事件方式加入事件环，等待调度。
-
-
-# Install Node.js
-1. 下载node.js
-
-    前往[https://nodejs.org/en/](https://nodejs.org/en/ "https://nodejs.org/en/")下载node.js稳定版
-    ![下载稳定版](http://i.imgur.com/1byvubu.png)
-
-
-2. 安装环境(windows 7 64位环境下)
-
-    - 一直Next就可以了
-
-    ![安装](http://i.imgur.com/gRew5uL.png)
-
-    - 在终端直接查看node.js的版本，查询到即安装成功
-
-    ![安装完成](http://i.imgur.com/awvnLdR.png)
-
-
-3. 结合Sublime开发
-
-    - 创建新的编译环境
-
-      ![创建新编译环境](http://i.imgur.com/IDga1Cv.png)
-    - 在里面写入
-    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="string">"cmd"</span>: [<span class="string">"node"</span>, <span class="string">"<span class="variable">$file</span>"</span>],</span><br><span class="line">	<span class="string">"selector"</span>: <span class="string">"source.js"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<pre><code>- 保存并重命名
-
-![保存并重命名](http://i.imgur.com/Jzs3iNo.png)
-- 写一个js文件，输出Hello World.按Ctrl+B进行编译，如果无反应，请重启sublime，出现Hello World即为成功
-
-![sublime](http://i.imgur.com/LXs03iI.png)
-</code></pre><h1 id="NPM-node-js-模块管理"><a href="#NPM-node-js-模块管理" class="headerlink" title="NPM node.js 模块管理"></a>NPM node.js 模块管理</h1><h2 id="NPM简介"><a href="#NPM简介" class="headerlink" title="NPM简介"></a>NPM简介</h2><blockquote>
+  </script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Jason.yunhao</h1><a id="logo" href="/.">Jason.yunhao</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 主页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/leaveMsg"><i class="fa fa-comments"> 留言板</i></a><a href="/about/"><i class="fa fa-user"> 关于我</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"></h1><div class="post-meta">Apr 28, 2018<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a class="disqus-comment-count" href="/2018/04/28/node/#vcomment"><span class="valine-comment-count" data-xid="/2018/04/28/node/"></span><span> 条评论</span></a><div class="post-content"><h1 id="Node-js-Notes"><a href="#Node-js-Notes" class="headerlink" title="Node.js-Notes"></a>Node.js-Notes</h1><p>个人的 Node.js 学习笔记，有兴趣的小伙伴可以了解下，希望能帮到你们。</p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><ol>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#特点">特点</a></li>
+<li><a href="#适合开发领域">适合开发领域</a></li>
+<li><a href="#总结">总结</a></li>
+</ul>
+</li>
+<li><a href="#install-nodejs">安装Node.js</a></li>
+<li><a href="#npm-nodejs-模块管理">NPM node.js 模块管理</a>    <ul>
+<li><a href="#npm简介">NPM简介</a></li>
+<li><a href="#npm常用命令">NPM常用命令</a></li>
+</ul>
+</li>
+<li><a href="#开始第一个-nodejs-web-实例">开始第一个 node.js web 实例</a></li>
+<li><a href="#nodejs-回调函数">node.js 回调函数</a><ul>
+<li><a href="#1-同步操作文件阻塞io">1. 同步操作文件(阻塞I/O)</a>     </li>
+<li><a href="#2-异步操作文件非阻塞io">2. 异步操作文件(非阻塞I/O)</a></li>
+</ul>
+</li>
+<li><a href="#nodejs-事件循环">Node.js 事件循环</a><ul>
+<li><a href="#自定义模块">自定义模块</a></li>
+</ul>
+</li>
+<li><a href="#nodejs-函数">Node.js 函数</a><ul>
+<li><a href="#常用函数">常用函数</a></li>
+<li><a href="#匿名函数">匿名函数</a></li>
+</ul>
+</li>
+<li><a href="#nodejs-路由">Node.js 路由</a></li>
+<li><a href="#nodejs-全局对象">Node.js 全局对象</a><ul>
+<li><a href="#__filename">__filename</a></li>
+<li><a href="#__dirname">__dirname</a></li>
+<li><a href="#console">console</a></li>
+<li><a href="#process">process</a></li>
+</ul>
+</li>
+<li><a href="#nodejs-常用工具">Node.js 常用工具</a><ul>
+<li><a href="#utilinspect-将任意对象转换-为字符串">util.inspect 将任意对象转换 为字符串</a></li>
+<li><a href="#utilisarray-判断是否是数组">util.isArray() 判断是否是数组</a></li>
+<li><a href="#utilisboolean-判断是否是boolean类型的">util.isBoolean() 判断是否是boolean类型的</a></li>
+<li><a href="#utilisdate-判断是否是日期">util.isDate() 判断是否是日期</a></li>
+<li><a href="#utilisfunction-判断是否是函数">util.isFunction() 判断是否是函数</a></li>
+<li><a href="#utilisobject-判断是否是对象">util.isObject() 判断是否是对象</a></li>
+<li><a href="#utilisregexp-是否是正则对象">util.isRegExp() 是否是正则对象</a></li>
+</ul>
+</li>
+<li><a href="#文件系统">文件系统</a><ul>
+<li><a href="#读文件内容">读文件内容</a><ul>
+<li><a href="#1-异步非堵塞读取">1. 异步非堵塞读取</a></li>
+<li><a href="#2-同步堵塞读取">2. 同步堵塞读取</a></li>
+</ul>
+</li>
+<li><a href="#写文件内容">写文件内容</a></li>
+<li><a href="#删除文件">删除文件</a></li>
+<li><a href="#创建目录">创建目录</a></li>
+<li><a href="#删除目录">删除目录</a></li>
+</ul>
+</li>
+<li><a href="#get和post请求">GET和POST请求</a><ul>
+<li><a href="#get请求">GET请求</a></li>
+<li><a href="#post请求">POST请求</a></li>
+</ul>
+</li>
+<li><a href="#工具模块">工具模块</a><ul>
+<li><a href="#os模块">OS模块</a></li>
+<li><a href="#path模块">Path模块</a></li>
+<li><a href="#net模块">Net模块</a></li>
+<li><a href="#dns模块">DNS模块</a></li>
+<li><a href="#domain模块">Domain模块</a></li>
+</ul>
+</li>
+<li><a href="#mysql">MySql</a><ul>
+<li><a href="#查询数据">查询数据</a></li>
+<li><a href="#插入数据">插入数据</a></li>
+<li><a href="#更新数据">更新数据</a></li>
+<li><a href="#删除数据">删除数据</a></li>
+</ul>
+</li>
+<li><a href="#http模块">HTTP模块</a></li>
+<li><a href="#静态文件夹">静态文件夹</a></li>
+</ol>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
+<p>Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。<br><br>Node.js 使用了一个事件驱动、非阻塞式 I/O 的模型，使其轻量又高效。<br><br>Node.js 的包管理器 npm，是全球最大的开源库生态系统。</p>
+</blockquote>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><h3 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h3><p><img src="http://i.imgur.com/aX2lBae.png" alt="单线程"></p>
+<blockquote>
+<p>在Java、PHP或者.net等服务器端语言中，会为每一个客户端连接创建一个新的线程。而每个线程需要耗费大约2MB内存。也就是说，理论上，一个8GB内存的服务器可以同时连接的最大用户数为4000个左右。要让Web应用程序支持更多的用户，就需要增加服务器的数量，而Web应用程序的硬件成本当然就上升了。<br><br>Node.js不为每个客户连接创建一个新的线程，而仅仅使用一个线程。当有用户连接了，就触发一个内部事件，通过非阻塞I/O、事件驱动机制，让Node.js程序宏观上也是并行的。使用Node.js，一个8GB内存的服务器，可以同时处理超过4万用户的连接。<br><br>另外，带线程的带来的好处，还有操作系统完全不再有线程创建、销毁的时间开销。<br>坏处，就是一个用户造成了线程的崩溃，整个服务都崩溃了，其他人也崩溃了。</p>
+</blockquote>
+<h3 id="非阻塞I-O-non-blocking-I-O"><a href="#非阻塞I-O-non-blocking-I-O" class="headerlink" title="非阻塞I/O non-blocking I/O"></a>非阻塞I/O non-blocking I/O</h3><blockquote>
+<p>例如，当在访问数据库取得数据的时候，需要一段时间。在传统的单线程处理机制中，在执行了访问数据库代码之后，整个线程都将暂停下来，等待数据库返回结果，才能执行后面的代码。也就是说，I/O阻塞了代码的执行，极大地降低了程序的执行效率。<br><br>由于Node.js中采用了非阻塞型I/O机制，因此在执行了访问数据库的代码之后，将立即转而执行其后面的代码，把数据库返回结果的处理代码放在回调函数中，从而提高了程序的执行效率。<br><br>当某个I/O执行完毕时，将以事件的形式通知执行I/O操作的线程，线程执行这个事件的回调函数。为了处理异步I/O，线程必须有事件循环，不断的检查有没有未处理的事件，依次予以处理。<br><br>阻塞模式下，一个线程只能处理一项任务，要想提高吞吐量必须通过多线程。而非阻塞模式下，一个线程永远在执行计算操作，这个线程的CPU核心利用率永远是100%。所以，这是一种特别有哲理的解决方案：与其人多，但是好多人闲着；还不如一个人玩命，往死里干活儿。</p>
+</blockquote>
+<h3 id="事件驱动-event-driven"><a href="#事件驱动-event-driven" class="headerlink" title="事件驱动 event-driven"></a>事件驱动 event-driven</h3><blockquote>
+<p>在Node中，客户端请求建立连接，提交数据等行为，会触发相应的事件。在Node中，在一个时刻，只能执行一个事件回调函数，但是在执行一个事件回调函数的中途，可以转而处理其他事件（比如，又有新用户连接了），然后返回继续执行原事件的回调函数，这种处理机制，称为“事件环”机制。<br><br>Node.js底层是C++（V8也是C++写的）。底层代码中，近半数都用于事件队列、回调函数队列的构建。用事件驱动来完成服务器的任务调度，这是鬼才才能想到的。针尖上的舞蹈，用一个线程，担负起了处理非常多的任务的使命。</p>
+</blockquote>
+<h2 id="适合开发领域"><a href="#适合开发领域" class="headerlink" title="适合开发领域"></a>适合开发领域</h2><blockquote>
+<p>Node.js 善于I/O，不善于计算。因为Node.js最擅长的就是任务调度，如果你的业务有很多的CPU计算，实际上也相当于这个计算阻塞了这个单线程，就不适合Node开发。<br><br>当应用程序需要处理大量并发的I/O，而在向客户端发出响应之前，应用程序内部并不需要进行非常复杂的处理的时候，Node.js非常适合。Node.js也非常适合与web socket配合，开发长连接的实时交互应用程序。<br><br>比如:<br></p>
+<ul>
+<li>用户表单收集</li>
+<li>考试系统</li>
+<li>聊天室</li>
+<li>图文直播</li>
+<li>提供JSON的API（为前台Angular使用）</li>
+</ul>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="http://i.imgur.com/DPHgbYn.png" alt="原理图"></p>
+<blockquote>
+<p>单线程，单线程的好处，减少了内存开销，操作系统的内存换页。如果某一个事情，进入了，但是被I/O阻塞了，所以这个线程就阻塞了。<br><br>非阻塞I/O， 不会傻等I/O语句结束，而会执行后面的语句。<br><br>事件机制，事件环，不管是新用户的请求，还是老用户的I/O完成，都将以事件方式加入事件环，等待调度。</p>
+</blockquote>
+<h1 id="Install-Node-js"><a href="#Install-Node-js" class="headerlink" title="Install Node.js"></a>Install Node.js</h1><ol>
+<li><p>下载node.js</p>
+<p> 前往<a href="https://nodejs.org/en/" title="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a>下载node.js稳定版<br> <img src="http://i.imgur.com/1byvubu.png" alt="下载稳定版"></p>
+</li>
+</ol>
+<ol start="2">
+<li><p>安装环境(windows 7 64位环境下)</p>
+<ul>
+<li><p>一直Next就可以了</p>
+<p><img src="http://i.imgur.com/gRew5uL.png" alt="安装"></p>
+</li>
+<li><p>在终端直接查看node.js的版本，查询到即安装成功</p>
+<p><img src="http://i.imgur.com/awvnLdR.png" alt="安装完成"></p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="3">
+<li><p>结合Sublime开发</p>
+<ul>
+<li><p>创建新的编译环境</p>
+<p><img src="http://i.imgur.com/IDga1Cv.png" alt="创建新编译环境"></p>
+</li>
+<li><p>在里面写入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="string">"cmd"</span>: [<span class="string">"node"</span>, <span class="string">"<span class="variable">$file</span>"</span>],</span><br><span class="line">	<span class="string">"selector"</span>: <span class="string">"source.js"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>保存并重命名</p>
+<p><img src="http://i.imgur.com/Jzs3iNo.png" alt="保存并重命名"></p>
+</li>
+<li><p>写一个js文件，输出Hello World.按Ctrl+B进行编译，如果无反应，请重启sublime，出现Hello World即为成功</p>
+<p><img src="http://i.imgur.com/LXs03iI.png" alt="sublime"></p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="NPM-node-js-模块管理"><a href="#NPM-node-js-模块管理" class="headerlink" title="NPM node.js 模块管理"></a>NPM node.js 模块管理</h1><h2 id="NPM简介"><a href="#NPM简介" class="headerlink" title="NPM简介"></a>NPM简介</h2><blockquote>
 <p>NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：</p>
 <ul>
 <li>允许用户从NPM服务器下载别人编写的第三方包到本地使用。</li>
@@ -312,7 +320,7 @@ Node.js底层是C++（V8也是C++写的）。底层代码中，近半数都用�
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//加载文件模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">file = <span class="string">'testdir'</span>;</span><br><span class="line">fs.rmdir(file);</span><br></pre></td></tr></table></figure>
 <h1 id="GET和POST请求"><a href="#GET和POST请求" class="headerlink" title="GET和POST请求"></a>GET和POST请求</h1><h2 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//加载web模块</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="comment">//加载url模块</span></span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line"><span class="comment">//加载querystring模块</span></span><br><span class="line"><span class="keyword">const</span> querystring = <span class="built_in">require</span>(<span class="string">'querystring'</span>);</span><br><span class="line"></span><br><span class="line">cs = <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">	uri = req.url;</span><br><span class="line">	<span class="keyword">if</span> (uri !== <span class="string">'/favicon.ico'</span>) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(uri);</span><br><span class="line">		<span class="comment">// 获取get参数字符串</span></span><br><span class="line">		str = url.parse(uri).query;</span><br><span class="line">		<span class="built_in">console</span>.log(str);</span><br><span class="line">		<span class="comment">// 将参数字符串转换为json对象</span></span><br><span class="line">		json = querystring.parse(str);</span><br><span class="line">		<span class="built_in">console</span>.log(json);</span><br><span class="line">		res.write(<span class="string">'Gavin\' Web server !'</span>);</span><br><span class="line">		res.end();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">http.createServer(cs).listen(<span class="number">666</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Http Is Running Successfully!'</span>);</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>在浏览器输入url地址 <a href="http://localhost:666/index?id=1&amp;name=Gavin">http://localhost:666/index?id=1&amp;name=Gavin</a></p>
+<p>在浏览器输入url地址 <a href="http://localhost:666/index?id=1&amp;name=Gavin" target="_blank" rel="noopener">http://localhost:666/index?id=1&amp;name=Gavin</a></p>
 </blockquote>
 <p><img src="http://i.imgur.com/Pi0Ciw2.png" alt=""><br><img src="http://i.imgur.com/47kM23w.png" alt=""></p>
 <h2 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h2><blockquote>
@@ -410,7 +418,7 @@ Node.js底层是C++（V8也是C++写的）。底层代码中，近半数都用�
 <h2 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h2><h3 id="url-模块"><a href="#url-模块" class="headerlink" title="url 模块"></a>url 模块</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(req.url);</span><br><span class="line">	res.end();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">3000</span>,<span class="string">"127.0.0.1"</span>);</span><br></pre></td></tr></table></figure>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</span><br><span class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">"url"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//url.parse()可以将一个完整的URL地址，分为很多部分：</span></span><br><span class="line">	<span class="comment">//host、port、pathname、path、query</span></span><br><span class="line">	<span class="keyword">var</span> pathname = url.parse(req.url).pathname;</span><br><span class="line">	<span class="comment">//url.parse()如果第二个参数是true，那么就可以将所有的查询变为对象</span></span><br><span class="line">	<span class="comment">//就可以直接打点得到这个参数</span></span><br><span class="line">	<span class="keyword">var</span> query = url.parse(req.url,<span class="literal">true</span>).query;</span><br><span class="line">	<span class="comment">//直接打点得到这个参数</span></span><br><span class="line">	<span class="keyword">var</span> age = query.age;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"pathname:"</span> + pathname);</span><br><span class="line">	<span class="built_in">console</span>.log(query);</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"age:"</span> + age);</span><br><span class="line">	</span><br><span class="line">	res.end();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">3000</span>,<span class="string">"127.0.0.1"</span>);</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>输入网址：<a href="http://localhost:3000/?age=18">http://localhost:3000/?age=18</a><br><br>输出：<br><br>pathname:/<br><br>{ age: ‘18’ } <br><br>age:18 <br></p>
+<p>输入网址：<a href="http://localhost:3000/?age=18" target="_blank" rel="noopener">http://localhost:3000/?age=18</a><br><br>输出：<br><br>pathname:/<br><br>{ age: ‘18’ } <br><br>age:18 <br></p>
 </blockquote>
 <h1 id="静态文件夹"><a href="#静态文件夹" class="headerlink" title="静态文件夹"></a>静态文件夹</h1><blockquote>
 <p>访问静态文件夹<br><br>文件目录<br></p>
@@ -435,7 +443,7 @@ Node.js底层是C++（V8也是C++写的）。底层代码中，近半数都用�
 <blockquote>
 <p>static/404.html</p>
 </blockquote>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>这是一个404页面<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>--></div><iframe src="/donate/?AliPayQR=/img/AliPayQR.png&amp;WeChatQR=/img/WeChatQR.png&amp;GitHub=https://github.com/1558198727&amp;BTCQR=/img/BTCQR.png&amp;BTCKEY=null&amp;PayPal=null" style="overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a class="article-share-link" data-url="https://codingyunhao.github.io/2018/04/28/node/" data-id="cjgixn37k0002sgwaihijcfof" data-qrcode="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACHUlEQVR42u3aQXLCMAwFUO5/6XTbmQ7hSzYdkJ9XnQCJXxaqJOvxiNf1ayVX/l6/v/Oze25eGBgYX8u4btf9d+4B+UafsZO9YWBgnMNIQmEejhNegkx+hYGBgbESEBNe7/VhYGBg9AJuXl1+9P8NDAyMD2YkZWq1KM1/VS2eMTAwTmPkXff///st5xsYGBhfxbiKq5fS5SHyai0MDIzZjDzAVVPAFVhzPxgYGEMZK8MTvaZ/0kS7D+6Ffh4GBsZQxt46uBpke+NiGBgYsxl56bhru70QXMhwMTAwhjKShK86ctE75qyGZgwMjBMY+cNWWm95vVkOr9V3hoGBMYKRt/tXEse97TkMDIzZjLzHno9zreDzQ4goBGNgYIxjVBO7aqpXDdZLaSIGBsYgRvXBScDNN10tj6NhCwwMjGMY1UZYcrfeK4iehYGBcQCjGl6TlK46wLHSwsPAwJjNeEdTLM/Zqnndi08xMDBGM/L2Vi+JzEvZfA/R4AUGBsYgxq42fZ4OJtRqWYuBgXEyoxoi81bdttNXDAyMYxjVQ8RqkVlt2zWnRTAwMMYx1hO7vE32jvIYAwPjBEYv2N0/cr3ztzKQgYGBMZXRa5CVTx7i71cDNwYGxjmMXuDbUENvaslhYGBg9LLL3lFl3s7DwMDA2Btwe8efhaYeBgbGAYzeYNb9JqpXeocQGBgYJzCWSsc4BK8khbtCPwYGxhcyfgAJf2qYIg6iIAAAAABJRU5ErkJggg==">分享</a><div class="tags"><a href="/tags/nodejs/">nodejs</a></div><div class="post-nav"><a class="pre" href="/2018/04/28/Part3000IsAlreadyInUse/">Part3000IsAlreadyInUse</a><a class="next" href="/2018/04/28/chat/">BLChat</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script><script>var notify = 'false' == true ? true : false;
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>这是一个404页面<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></div><iframe src="/donate/?AliPayQR=/img/AliPayQR.png&amp;WeChatQR=/img/WeChatQR.png&amp;GitHub=https://github.com/1558198727&amp;BTCQR=/img/BTCQR.png&amp;BTCKEY=null&amp;PayPal=null" style="overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a class="article-share-link" data-url="https://codingyunhao.github.io/2018/04/28/node/" data-id="cjgixn37k0002sgwaihijcfof" data-qrcode="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACHUlEQVR42u3aQXLCMAwFUO5/6XTbmQ7hSzYdkJ9XnQCJXxaqJOvxiNf1ayVX/l6/v/Oze25eGBgYX8u4btf9d+4B+UafsZO9YWBgnMNIQmEejhNegkx+hYGBgbESEBNe7/VhYGBg9AJuXl1+9P8NDAyMD2YkZWq1KM1/VS2eMTAwTmPkXff///st5xsYGBhfxbiKq5fS5SHyai0MDIzZjDzAVVPAFVhzPxgYGEMZK8MTvaZ/0kS7D+6Ffh4GBsZQxt46uBpke+NiGBgYsxl56bhru70QXMhwMTAwhjKShK86ctE75qyGZgwMjBMY+cNWWm95vVkOr9V3hoGBMYKRt/tXEse97TkMDIzZjLzHno9zreDzQ4goBGNgYIxjVBO7aqpXDdZLaSIGBsYgRvXBScDNN10tj6NhCwwMjGMY1UZYcrfeK4iehYGBcQCjGl6TlK46wLHSwsPAwJjNeEdTLM/Zqnndi08xMDBGM/L2Vi+JzEvZfA/R4AUGBsYgxq42fZ4OJtRqWYuBgXEyoxoi81bdttNXDAyMYxjVQ8RqkVlt2zWnRTAwMMYx1hO7vE32jvIYAwPjBEYv2N0/cr3ztzKQgYGBMZXRa5CVTx7i71cDNwYGxjmMXuDbUENvaslhYGBg9LLL3lFl3s7DwMDA2Btwe8efhaYeBgbGAYzeYNb9JqpXeocQGBgYJzCWSsc4BK8khbtCPwYGxhcyfgAJf2qYIg6iIAAAAABJRU5ErkJggg==">分享</a><div class="tags"></div><div class="post-nav"><a class="pre" href="/2018/04/28/Part3000IsAlreadyInUse/"></a><a class="next" href="/2018/04/28/chat/"></a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script><script>var notify = 'false' == true ? true : false;
 var verify = 'false' == true ? true : false;
 var GUEST_INFO = ['nick','mail','link'];
 var guest_info = 'nick,mail,link'.split(',').filter(function(item){
@@ -452,7 +460,7 @@ window.valine = new Valine({
   avatar:'mm',
   guest_info:guest_info,
   pageSize:'10'
-})</script></div></div></div><div class="pure-u-1 pure-u-md-1-4"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/梦创例会/">梦创例会</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/nodejs/" style="font-size: 15px;">nodejs</a> <a href="/tags/BLChat/" style="font-size: 15px;">BLChat</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/前端/" style="font-size: 15px;">前端</a> <a href="/tags/梦创/" style="font-size: 15px;">梦创</a> <a href="/tags/数据结构/" style="font-size: 15px;">数据结构</a> <a href="/tags/开学/" style="font-size: 15px;">开学</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/在腾讯云上搭建个人静态博客-1/">在腾讯云上搭建个人静态博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/在腾讯云上搭建个人静态博客/">在腾讯云上搭建个人静态博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/图的邻接矩阵表示广度深度遍历大连理工大学数据结构上机/">图的广度深度优先遍历</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/例会笔记（2）/">梦创例会笔记（2）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/例会笔记（1）/">梦创例会笔记（1）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/开学/">开学</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/第一篇博客/">第一篇博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/大连理工大学软件学院数据结构第四章第九题/">大连理工大学软件学院数据结构第四章第九题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/Part3000IsAlreadyInUse/">Part3000IsAlreadyInUse</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/node/">Node.js-Notes</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://liyunhao.cn/" title="liyunhao.cn" target="_blank">liyunhao.cn</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">Jason.yunhao.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+})</script></div></div></div><div class="pure-u-1 pure-u-md-1-4"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/前端/" style="font-size: 15px;">前端</a> <a href="/tags/数据结构/" style="font-size: 15px;">数据结构</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/在腾讯云上搭建个人静态博客/">在腾讯云上搭建个人静态博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/图的邻接矩阵表示广度深度遍历大连理工大学数据结构上机/">图的邻接矩阵表示广度深度遍历大连理工大学数据结构上机</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/例会笔记（2）/">例会笔记（2）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/例会笔记（1）/">例会笔记（1）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/开学/">开学</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/第一篇博客/">第一篇博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/大连理工大学软件学院数据结构第四章第九题/">大连理工大学软件学院数据结构第四章第九题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/Part3000IsAlreadyInUse/">Part3000IsAlreadyInUse</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/node/">node</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/chat/">chat</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://liyunhao.cn/" title="liyunhao.cn" target="_blank">liyunhao.cn</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">Jason.yunhao.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
 if (search_path.length == 0) {
    search_path = 'search.xml';
 }
